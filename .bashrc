@@ -23,6 +23,12 @@ alias glg='git log --graph --oneline --all'
 alias glgg="git log --graph --pretty=format:'%Cred%h%Creset - %Cgreen%ad -%C(bold yellow)%d%Creset %s %C(bold blue)<%an>%Creset' --abbrev-commit --date=short"
 alias gb='git branch'
 alias gbv='git branch -av'
+alias gs='git status'
+alias gl='glgg'
+alias gc='git checkout'
+alias gcb='git checkout -b'
+alias gct='git checkout --track'
+alias gd='git diff'
 
 export PATH=/opt/local/bin:/opt/local/sbin:$PATH:.
 export MANPATH=/opt/local/share/man:$MANPATH

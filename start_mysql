@@ -1,0 +1,3 @@
+#!/bin/sh
+
+sudo -v; sudo /opt/local/bin/mysqld_safe5 &
