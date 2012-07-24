@@ -29,6 +29,8 @@ alias gc='git checkout'
 alias gcb='git checkout -b'
 alias gct='git checkout --track'
 alias gd='git diff'
+alias gp='git pull'
+alais gf='git fetch'
 
 export PATH=/opt/local/bin:/opt/local/sbin:$PATH:.
 export MANPATH=/opt/local/share/man:$MANPATH
