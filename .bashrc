@@ -14,6 +14,7 @@ alias medusa4='ssh medusa004.989studios.com'
 alias rwlinux='ssh sd-rwiley-linux.989studios.com'
 alias psef='ps -Al'
 alias psl='ps -o user,pid,ppid,%cpu,%mem,lstart,command'
+alias pso='ps -o user,pid,ppid,pgid,sess,lstart,command ; date'
 
 alias gl1='git log --pretty=format:"  %h  %s"'
 alias gl2='git log --pretty=format:"  %h  %an %ar - %s"'
