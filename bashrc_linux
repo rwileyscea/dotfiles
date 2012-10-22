@@ -1,31 +1,41 @@
+# Source global definitions
+#if [ -f /etc/bashrc ]; then
+#        . /etc/bashrc
+#fi
+
+umask 022
 
 set -o vi
-
-# ALIASES
+alias mailx=mail
+unalias ls > /dev/null 2>&1
+alias la='ls -la'
 alias ll='ls -l'
-alias la='ls -a'
-alias pf='printf "%-20s"'
-
-alias medusa1='ssh medusa001.989studios.com'
-alias medusa2='ssh medusa002.989studios.com'
-alias medusa4='ssh medusa004.989studios.com'
-alias rwlinux='ssh sd-rwiley-linux.989studios.com'
-alias rwwl='ssh sd-rwiley-linux.989studios.com rw.worklog'
-alias psef='ps -Al'
-alias psl='ps -o user,pid,ppid,%cpu,%mem,lstart,command'
-alias pso='ps -o user,pid,ppid,pgid,sess,lstart,command ; date'
-
-. ~/git-prompt.sh
-. ~/git-completion.bash
-
+alias ss='sudo ssh-root'
+alias w='w | sort'
+[ -f /usr/local/bin/vim ] && alias vi='/usr/local/bin/vim'
+[ -f /usr/local/bin/vim ] && alias view='/usr/local/bin/vim -R'
+alias ep='printf "%-20s " '
+alias pf='printf "%-25s " '
+alias trn='tr -s "\n"'
+alias rwwl='rw.worklog'
+alias tw='tail ~/worklog'
+alias vw='vi ~/worklog'
+alias psl='ps  -o user,pid,ppid,%cpu,%mem,lstart,command'
+alias docs='cd ~/docs/GLUE'
+alias hdm='cd /tool/online_gaming/GIT-Primary/rwiley/HDM'
+alias hdmsvn='cd /tool/online_gaming/SVN-primary/rwiley/hdm'
+alias glue='cd /tool/online_gaming/GIT-Primary/rwiley/GLUE/server'
+alias deployer='cd /tool/online_gaming/GIT-Primary/rwiley/DEPLOYER'
+alias gsi='cd /tool/online_gaming/GIT-Primary/rwiley/GSI'
 alias gl1='git log --pretty=format:"  %h  %s"'
 alias gl2='git log --pretty=format:"  %h  %an %ar - %s"'
 alias gl3='git log --pretty=oneline'
 alias gl4='git log --pretty=format:"  %h  %an %aD - %s"'
-alias glg='git log --graph --oneline --all'
+alias glg="git log --graph --oneline --all"
 alias glgg="git log --graph --pretty=format:'%Cred%h%Creset - %Cgreen%ad -%C(bold yellow)%d%Creset %s %C(bold blue)<%an>%Creset' --abbrev-commit --date=short"
 alias gb='git branch'
-alias gbv='git branch -av'
+alias gc='git checkout'
+alias gl='git log --pretty=oneline'
 alias gs='git status'
 alias gl='glgg'
 alias gc='git checkout'
@@ -33,27 +43,112 @@ alias gcb='git checkout -b'
 alias gct='git checkout --track'
 alias gd='git diff'
 alias gp='git pull'
-alias gf='git fetch'
 
-export PATH=/opt/local/bin:/opt/local/sbin:/usr/local/mysql/bin:$PATH:.
-export MANPATH=/opt/local/share/man:$MANPATH
-export DYLD_LIBRARY_PATH=/usr/lib:/usr/local/lib:/usr/local/mysql/lib
 
-if [[ -s /Users/rwiley/.rvm/scripts/rvm ]] ; then source /Users/rwiley/.rvm/scripts/rvm ; fi
 
-glog () 
-{ 
-    for h in `git branch |sed -e 's/\*//' |grep -v master`;
-    do
-        echo $h;
-        git log --pretty=format:"  %h  %an %ar - %s" -10 $h;
-    done;
-    echo;
-    echo ========================;
-    git branch -av
+glog () { for h in `git branch |sed -e 's/\*//' |grep -v master`; do echo $h; gl2 -10 $h; done; echo; echo; git branch -av; }
+
+PROMPT_COLOR='1;34m'
+#export PS1="\[\e[${PROMPT_COLOR}\]\t\[\e[m\][\u@\h \W] \$ "
+export PS1="\t \u@\h \W  \$ "
+#export PS1="[\u@\h \W] \# \$ "
+###needed if different than the default: export TNS_ADMIN=
+###needed if different than the default: export TWO_TASK=
+export PATH=${HOME}/bin\
+:/bin\
+:/usr/bin\
+:/usr/local/bin\
+:/usr/X11R6/bin\
+:/usr1/oracle/admin/scripts\
+:/tool/online_gaming/bin\
+:/opt/CollabNet_Subversion/bin\
+:$PATH\
+:.
+
+export LD_LIBRARY_PATH=/usr/evolution28/lib:/usr/lib:/usr/local/lib:$LD_LIBRARY_PATH
+export MANPATH=/tool/CSSC_home/current/bsd:$MANPATH
+export nochome=/projects/it/ng/techops
+#export CDPATH=$CDPATH:/tool/online_gaming:/tool/online_gaming/rtime:/tool/online_gaming/SVO2:/tool/online_gaming/hosts
+export NLS_LANG=AMERICAN_AMERICA.AL32UTF8
+
+##  ORACLE 10 vs ORACLE 11
+if   [ -d /usr/lib/oracle/11.2/client ] ; then
+    export ORACLE_HOME=/usr/lib/oracle/11.2/client
+elif [ -d /usr/oracle/product/10.2.0 ] ; then
+    export ORACLE_HOME=/usr/oracle/product/10.2.0
+fi
+export LD_LIBRARY_PATH=$ORACLE_HOME/lib:$LD_LIBRARY_PATH
+export PATH=$ORACLE_HOME/bin:$PATH
+export TNS_ADMIN=/tool/online_gaming/
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/lib/oracle/10.2.0.4/client/lib
+
+[ -d /u01/glue/client ]  && export PATH=/u01/glue/client/bin:$PATH
+[ -d /u01/glue/share ]   && export PATH=/u01/glue/share/bin:$PATH
+[ -d /u01/bigmap/share ] && export PATH=/u01/bigmap/share/bin:$PATH
+[ -d /u01/hdm/share ]    && export PATH=/u01/hdm/share/bin:$PATH
+[ -d /u01/share ]        && export PATH=/u01/share/bin:$PATH
+
+if [ "$TERM" = screen ]; then
+    stty erase '^H'
+fi
+
+
+# new glue setup copied from ~mmiller/.profile
+case $HOSTNAME in
+  medusa001.989studios.com|medusa002.989studios.com|medusa004.989studios.com )
+     #GLUE production
+     echo "!!!!GLUE: This is a PRODUCTION Environment. Be cautious!!!!"
+     . /u01/glue/lib/sh/profile.sh
+     ;;
+   
+  sd-rwiley-linux.989studios.com )
+     . /u01/glue/client/lib/sh/profile.sh
+     ;;
+  *)
+     [ -r /u01/glue/lib/sh/profile.sh ] && . /u01/glue/lib/sh/profile.sh
+esac
+
+
+###
+### ssh-agent stuff from github
+###   http://help.github.com/working-with-key-passphrases/
+###
+
+SSH_ENV="$HOME/.ssh/env_`hostname`"
+
+function start_agent {
+  echo -n "Initializing new SSH agent..."
+  rm -f $SSH_ENV
+  /usr/bin/ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
+  echo succeeded
+  chmod 600 "${SSH_ENV}"
+  . "${SSH_ENV}" > /dev/null
+  /usr/bin/ssh-add;
 }
 
-[ "`uname`" == "Darwin" ] && alias ldd='otool -L'
+# Source SSH settings, if applicable
+#if [ "`hostname`" = "sd-rwiley-linux.989studios.com" -o "`hostname`" = "hdmdev.scea.com" -o "`hostname`" = "medusa001.989studios.com" -o "`hostname`" = "sd-c4sandbox.989studios.com" ]; then
+
+if grep "`hostname`" ssh_agent_hosts >/dev/null 2>&1; then
+  if [ -f "${SSH_ENV}" ]; then
+    . "${SSH_ENV}" > /dev/null
+    #ps ${SSH_AGENT_PID} doesn't work under cywgin
+    ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+      start_agent;
+    }
+  else
+    start_agent;
+  fi
+fi
+
+
+### source shiv setup environent vars
+[ -r ~/shivsetup.sh ] && source ~/shivsetup.sh
+
+alias gitbuilder='cd /tool/online_gaming/GLUE2/GIT-builder'
+alias glue2builds='cd /tool/online_gaming/GLUE2/glue2builds'
+export PATH=/tool/online_gaming/GIT-Primary/rwiley/GLUE/dev/bin:$PATH
+export RUBYLIB=/u01/glue/share/lib
 
 green_text() {
   echo -n "[32;40m$@[0;37;40m"
@@ -62,5 +157,8 @@ green_text() {
 red_text() {
   echo -n "[31;40m$@[0;37;40m"
 }
+
+. ~/git-completion.bash
+. ~/git-prompt.sh
 
 export PS1='\t \u@\h \W$(__git_ps1 " ($(green_text %s))") $ '
