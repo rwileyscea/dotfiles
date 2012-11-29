@@ -35,9 +35,9 @@ alias glg="git log --graph --oneline --all"
 alias glgg="git log --graph --pretty=format:'%C(yellow)%h%Creset - %ad -%C(bold yellow)%d%Creset %s %C(bold blue)<%an>%Creset' --abbrev-commit --date=short"
 alias gb='git branch'
 alias gc='git checkout'
-alias gl='git log --pretty=oneline'
 alias gs='git status'
 alias gl='glgg'
+alias gll='git log --pretty=format:"%C(yellow)%h%Cred%d %Creset%s%Cblue [%cn]" --decorate --numstat'
 alias gc='git checkout'
 alias gcb='git checkout -b'
 alias gct='git checkout --track'
