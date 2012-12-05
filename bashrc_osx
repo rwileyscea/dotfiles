@@ -35,7 +35,7 @@ alias gd='git diff'
 alias gp='git pull'
 alias gf='git fetch'
 
-export PATH=/opt/local/bin:/opt/local/sbin:/usr/local/mysql/bin:$PATH:~/bin:.
+export PATH=/opt/local/bin:/opt/local/sbin:/usr/local/sbin:/usr/local/mysql/bin:$PATH:~/bin:.
 export MANPATH=/opt/local/share/man:$MANPATH
 export DYLD_LIBRARY_PATH=/usr/lib:/usr/local/lib:/usr/local/mysql/lib
 
@@ -69,10 +69,10 @@ RED="\[\033[31;1m\]"
 YELLOW="\[\033[33;1m\]"
 GREEN="\[\033[32;40m\]"
 WHITE="\[\033[37;1m\]"
-SMILEY="${NORMAL}:)"
-FROWNY="${RED}:(${NORMAL}"
+OCEAN="\[\033[36;1m\]"
 smiles_times="if [ \$? = 0 ]; then echo \"${SMILEY}\"; else echo \"${FROWNY}\"; fi"
 
 #  export PS1="${RESET}${YELLOW}\u@\h${NORMAL} \`${SELECT}\` ${YELLOW}\w $(__git_ps1) >${NORMAL} "
 # export PS1='${RESET}\t \u@\h \W$(__git_ps1 " ($(green_text %s))") $ '
-export PS1="${RESET}${NORMAL}\`${smiles_times}\` \t \u@\h \w${GREEN}\$(__git_ps1 ' (%s)')${NORMAL} $ "
+export PS1="${RESET}${NORMAL}\`${smiles_times}\` ${OCEAN}\D{%m/%d %H:%M:%S}${NORMAL} \u@\h \w${GREEN}\$(__git_ps1 ' (%s)')${NORMAL} $ "
+export QUERY_TRACE=0
