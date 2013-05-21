@@ -43,6 +43,7 @@ alias gcb='git checkout -b'
 alias gct='git checkout --track'
 alias gd='git diff'
 alias gp='git pull'
+alias gf='git fetch'
 
 
 
