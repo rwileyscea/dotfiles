@@ -9,8 +9,8 @@ alias pf='printf "%-20s"'
 alias medusa1='ssh medusa001.989studios.com'
 alias medusa2='ssh medusa002.989studios.com'
 alias medusa4='ssh medusa004.989studios.com'
-alias rwlinux='ssh sd-rwiley-linux.989studios.com'
-alias rwwl='ssh sd-rwiley-linux.989studios.com rw.worklog'
+alias rwlinux='ssh sd-rwiley-c6.scea.com'
+alias rwwl='rwlinux rw.worklog'
 alias psef='ps -Al'
 alias psl='ps -o user,pid,ppid,%cpu,%mem,lstart,command'
 alias pso='ps -o user,pid,ppid,pgid,sess,lstart,command ; date'
@@ -27,7 +27,8 @@ alias glgg="git log --graph --pretty=format:'%C(yellow)%h%Creset - %ad -%C(bold 
 alias gb='git branch'
 alias gbv='git branch -av'
 alias gs='git status'
-alias gl='glgg'
+alias gsb='git status -sb'
+alias gl='git lola'
 alias gc='git checkout'
 alias gcb='git checkout -b'
 alias gct='git checkout --track'
@@ -35,13 +36,15 @@ alias gd='git diff'
 alias gp='git pull'
 alias gf='git fetch'
 alias pt='pstree -g 2'
+alias rvmc='rvm current'
 
-export PATH=/opt/local/bin:/opt/local/sbin:/usr/local/sbin:/usr/local/bin:/usr/local/mysql/bin:$PATH:~/bin:.
 export MANPATH=/opt/local/share/man:$MANPATH
-export ORACLE_HOME=/opt/oracle/instantclient_10_2_64bit
-export LIBPATH1=/usr/local/opt/libxslt/lib:/usr/local/opt/libxml2/lib:/usr/lib:/usr/local/lib:/usr/local/mysql/lib:$ORACLE_HOME
-export LIBPATH2=/usr/lib:/usr/local/lib:/usr/local/mysql/lib:$ORACLE_HOME
-export DYLD_LIBRARY_PATH=$LIBPATH2
+export ORACLE_HOME=/opt/oracle/instantclient_11_2_x64
+export TNS_ADMIN=/opt/oracle/instantclient_11_2_x64/network/admin
+export PATH=/opt/local/bin:/opt/local/sbin:/usr/local/sbin:/usr/local/bin:/usr/local/mysql/bin:$ORACLE_HOME/bin:$PATH:~/bin:~/code/appdev_tools/bash:.
+export LIBPATH1=/usr/local/lib:/usr/lib:/usr/local/mysql/lib:$ORACLE_HOME
+export LIBPATH2=/usr/local/opt/libxslt/lib:/usr/local/opt/libxml2/lib:$LIBPATH1
+export DYLD_LIBRARY_PATH=$LIBPATH1
 switchdy () { if [ "$DYLD_LIBRARY_PATH" == "$LIBPATH1" ]; then export DYLD_LIBRARY_PATH=$LIBPATH2; else export DYLD_LIBRARY_PATH=$LIBPATH1; fi ; }
 
 if [[ -s /Users/rwiley/.rvm/scripts/rvm ]] ; then source /Users/rwiley/.rvm/scripts/rvm ; fi
@@ -79,7 +82,7 @@ smiles_times="if [ \$? = 0 ]; then echo \"${SMILEY}\"; else echo \"${FROWNY}\"; 
 
 #  export PS1="${RESET}${YELLOW}\u@\h${NORMAL} \`${SELECT}\` ${YELLOW}\w $(__git_ps1) >${NORMAL} "
 # export PS1='${RESET}\t \u@\h \W$(__git_ps1 " ($(green_text %s))") $ '
-export PS1="${RESET}${NORMAL}\`${smiles_times}\` ${OCEAN}\D{%m/%d %H:%M:%S}${NORMAL} \u@\h \w${GREEN}\$(__git_ps1 ' (%s)')${NORMAL} $ "
+export PS1="${RESET}${NORMAL}\`${smiles_times}\` ${OCEAN}\D{%m/%d %H:%M:%S}${NORMAL} \u@\h \W${GREEN}\$(__git_ps1 ' (%s)')${NORMAL} $ "
 export QUERY_TRACE=0
 
 gdo()
