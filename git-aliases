@@ -3,6 +3,7 @@
   assume   = update-index --assume-unchanged
   unassume = update-index --no-assume-unchanged
   assumed  = "!git ls-files -v | grep ^h | cut -c 3-"
-  aliases = !git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /'
+  aliases  = !git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /'
   snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
-
+  lol      = log --graph --decorate --pretty=oneline --abbrev-commit
+  lola     = log --graph --decorate --pretty=oneline --abbrev-commit --all
