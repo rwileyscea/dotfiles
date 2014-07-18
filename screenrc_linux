@@ -1,0 +1,5 @@
+# HARDSTATUS_1='%{= kG}[%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %m/%d %{g}]'
+# HARDSTATUS_2='%{= .} %-Lw%{= .}%> %n%f %t%{= .}%+Lw%< %-=%{g}'
+# HARDSTATUS_3='%{= .} %-w%{= kg}%> (%n %t)%{= kd}%+w%< %-='
+hardstatus alwayslastline '%{= .} %-w%{= kg}%> (%n %t)%{= kd}%+w%< %-='
+defshell -bash      # dash makes it a login shell
