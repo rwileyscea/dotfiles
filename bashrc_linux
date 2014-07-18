@@ -11,6 +11,8 @@ unalias ls > /dev/null 2>&1
 alias la='ls -la'
 alias ll='ls -l'
 alias ss='sudo ssh-root'
+alias ssn='sudo ssh-root -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
+alias sshn='ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
 alias w='w | sort'
 [ -f /usr/local/bin/vim ] && alias vi='/usr/local/bin/vim'
 [ -f /usr/local/bin/vim ] && alias view='/usr/local/bin/vim -R'
@@ -18,7 +20,7 @@ alias ep='printf "%-20s " '
 alias pf='printf "%-25s " '
 alias trn='tr -s "\n"'
 alias rwwl='rw.worklog'
-alias tw='tail ~/worklog'
+alias tw='tail -n 20 ~/worklog'
 alias vw='vi ~/worklog'
 alias psl='ps  -o user,pid,ppid,%cpu,%mem,lstart,command'
 alias docs='cd ~/docs/GLUE'
@@ -44,7 +46,8 @@ alias gct='git checkout --track'
 alias gd='git diff'
 alias gp='git pull'
 alias gf='git fetch'
-
+alias gh='cd /tool/online_gaming/GIT-Primary/rwiley'
+alias sc='screen'
 
 
 glog () { for h in `git branch |sed -e 's/\*//' |grep -v master`; do echo $h; gl2 -10 $h; done; echo; echo; git branch -av; }
@@ -55,16 +58,7 @@ export PS1="\t \u@\h \W  \$ "
 #export PS1="[\u@\h \W] \# \$ "
 ###needed if different than the default: export TNS_ADMIN=
 ###needed if different than the default: export TWO_TASK=
-export PATH=${HOME}/bin\
-:/bin\
-:/usr/bin\
-:/usr/local/bin\
-:/usr/X11R6/bin\
-:/usr1/oracle/admin/scripts\
-:/tool/online_gaming/bin\
-:/opt/CollabNet_Subversion/bin\
-:$PATH\
-:.
+
 
 export LD_LIBRARY_PATH=/usr/evolution28/lib:/usr/lib:/usr/local/lib:$LD_LIBRARY_PATH
 export MANPATH=/tool/CSSC_home/current/bsd:$MANPATH
@@ -79,15 +73,32 @@ elif [ -d /usr/oracle/product/10.2.0 ] ; then
     export ORACLE_HOME=/usr/oracle/product/10.2.0
 fi
 export LD_LIBRARY_PATH=$ORACLE_HOME/lib:$LD_LIBRARY_PATH
-export PATH=$ORACLE_HOME/bin:$PATH
 export TNS_ADMIN=/tool/online_gaming/
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/lib/oracle/10.2.0.4/client/lib
 
-[ -d /u01/glue/client ]  && export PATH=/u01/glue/client/bin:$PATH
-[ -d /u01/glue/share ]   && export PATH=/u01/glue/share/bin:$PATH
-[ -d /u01/bigmap/share ] && export PATH=/u01/bigmap/share/bin:$PATH
-[ -d /u01/hdm/share ]    && export PATH=/u01/hdm/share/bin:$PATH
-[ -d /u01/share ]        && export PATH=/u01/share/bin:$PATH
+if [ -n "$(echo $PATH |grep CollabNet 2>/dev/null)" ]; then
+  : no-op
+else
+  export PATH=${HOME}/bin\
+:/bin\
+:/usr/bin\
+:/usr/local/bin\
+:/usr/X11R6/bin\
+:/usr1/oracle/admin/scripts\
+:/tool/online_gaming/bin\
+:/opt/CollabNet_Subversion/bin\
+:$ORACLE_HOME/bin:$PATH\
+:$PATH\
+:.
+
+  [ -d /u01/glue/client ]  && export PATH=/u01/glue/client/bin:$PATH
+  [ -d /u01/glue/share ]   && export PATH=/u01/glue/share/bin:$PATH
+  [ -d /u01/bigmap/share ] && export PATH=/u01/bigmap/share/bin:$PATH
+  [ -d /u01/hdm/share ]    && export PATH=/u01/hdm/share/bin:$PATH
+  [ -d /u01/share ]        && export PATH=/u01/share/bin:$PATH
+
+  export PATH=~/appdev_tools/bash:$PATH
+fi
 
 if [ "$TERM" = screen ]; then
     stty erase '^H'
@@ -128,8 +139,6 @@ function start_agent {
 }
 
 # Source SSH settings, if applicable
-#if [ "`hostname`" = "sd-rwiley-linux.989studios.com" -o "`hostname`" = "hdmdev.scea.com" -o "`hostname`" = "medusa001.989studios.com" -o "`hostname`" = "sd-c4sandbox.989studios.com" ]; then
-
 if grep "`hostname`" ssh_agent_hosts >/dev/null 2>&1; then
   if [ -f "${SSH_ENV}" ]; then
     . "${SSH_ENV}" > /dev/null
@@ -148,7 +157,7 @@ fi
 
 alias gitbuilder='cd /tool/online_gaming/GLUE2/GIT-builder'
 alias glue2builds='cd /tool/online_gaming/GLUE2/glue2builds'
-export PATH=/tool/online_gaming/GIT-Primary/rwiley/GLUE/dev/bin:$PATH
+# export PATH=/tool/online_gaming/GIT-Primary/rwiley/GLUE/dev/bin:$PATH
 export RUBYLIB=/u01/glue/share/lib
 
 green_text() {
@@ -167,3 +176,4 @@ ocean_text() {
 . ~/git-prompt.sh
 
 export PS1='[36;40m\D{%m/%d %H:%M:%S}[0;37;40m \u@\h \W$(__git_ps1 " ($(green_text %s))") $ '
+
