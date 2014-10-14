@@ -54,10 +54,17 @@ glog () { for h in `git branch |sed -e 's/\*//' |grep -v master`; do echo $h; gl
 
 PROMPT_COLOR='1;34m'
 #export PS1="\[\e[${PROMPT_COLOR}\]\t\[\e[m\][\u@\h \W] \$ "
-export PS1="\t \u@\h \W  \$ "
+#export PS1="\t \u@\h \W  \$ "
 #export PS1="[\u@\h \W] \# \$ "
-###needed if different than the default: export TNS_ADMIN=
-###needed if different than the default: export TWO_TASK=
+#export PS1='[36;40m\D{%m/%d %H:%M:%S}[0;37;40m \u@\h \W$(__git_ps1 " ($(green_text %s))") $ '
+#export PS1='\[[36;40m\D{%m/%d %H:%M:%S}[0;37;40m \u@\h \W$(__git_ps1 " ($(green_text %s))") $ '
+#export PS1="\D{%m/%d %H:%M:%S} \u@\h \W  \$ "
+#export PS1="\[\e[36;40m\] \D{%m/%d %H:%M:%S}\[\e[0;37;40m\] \u@\h \W  \$ "
+#export PS1='\[[36;40m\D{%m/%d %H:%M:%S}[0;37;40m \u@\h \W$(__git_ps1 " ($(green_text %s))") $ '
+#export PS1='\[\e[36;40m\]\D{%m/%d %H:%M:%S}\[\e[0;37;40m\] \u@\h \W$(__git_ps1 " ($(green_text %s))") $ '
+
+# build PS1
+source ps1.src
 
 
 export LD_LIBRARY_PATH=/usr/evolution28/lib:/usr/lib:/usr/local/lib:$LD_LIBRARY_PATH
@@ -99,11 +106,6 @@ else
 
   export PATH=~/appdev_tools/bash:$PATH
 fi
-
-if [ "$TERM" = screen ]; then
-    stty erase '^H'
-fi
-
 
 # new glue setup copied from ~mmiller/.profile
 case $HOSTNAME in
@@ -161,19 +163,18 @@ alias glue2builds='cd /tool/online_gaming/GLUE2/glue2builds'
 export RUBYLIB=/u01/glue/share/lib
 
 green_text() {
-  echo -n "[32;40m$@[0;37;40m"
+  echo -n "\e[32;40m$@\e[0;37;40m"
 }
 
 red_text() {
-  echo -n "[31;40m$@[0;37;40m"
+  echo -n "\\[\\e[31;40m\]$@\\[\\e[0;37;40m\\]"
 }
 
 ocean_text() {
-  echo -n "[36;40m$@[0;37;40m"
+  echo -n "\\[\\e[36;40m\\]$@\\[\\e[0;37;40m\\]"
 }
 
 . ~/git-completion.bash
 . ~/git-prompt.sh
 
-export PS1='[36;40m\D{%m/%d %H:%M:%S}[0;37;40m \u@\h \W$(__git_ps1 " ($(green_text %s))") $ '
 
