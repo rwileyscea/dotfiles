@@ -18,17 +18,27 @@ alias pso='ps -o user,pid,ppid,pgid,sess,lstart,command ; date'
 . ~/git-prompt.sh
 . ~/git-completion.bash
 
+# GIT Aliases
+# assume = update-index --assume-unchanged
+# unassume = update-index --no-assume-unchanged
+# assumed = !git ls-files -v | grep ^h | cut -c 3-
+# aliases = !git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /'
+# snapshot = !git stash save snapshot: $(date) && git stash apply stash@{0}
+# lol = log --graph --decorate --pretty=oneline --abbrev-commit
+# lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+
+alias gl='git log'
 alias gl1='git log --pretty=format:"  %h  %s"'
 alias gl2='git log --pretty=format:"  %h  %an %ar - %s"'
 alias gl3='git log --pretty=oneline'
 alias gl4='git log --pretty=format:"  %h  %an %aD - %s"'
-alias glg='git log --graph --oneline --all'
-alias glgg="git log --graph --pretty=format:'%C(yellow)%h%Creset - %ad -%C(bold yellow)%d%Creset %s %C(bold blue)<%an>%Creset' --abbrev-commit --date=short"
+alias glg="git log --graph --pretty=format:'%C(yellow)%h%Creset - %ad -%C(bold yellow)%d%Creset %s %C(bold blue)<%an>%Creset' --abbrev-commit --date=short"
+alias glgg="glg"
+alias gla='glg --all'
 alias gb='git branch'
 alias gbv='git branch -av'
 alias gs='git status'
 alias gsb='git status -sb'
-alias gl='git lola'
 alias gc='git checkout'
 alias gcb='git checkout -b'
 alias gct='git checkout --track'
@@ -80,9 +90,12 @@ WHITE="\[\033[37;1m\]"
 OCEAN="\[\033[36;1m\]"
 smiles_times="if [ \$? = 0 ]; then echo \"${SMILEY}\"; else echo \"${FROWNY}\"; fi"
 
-#  export PS1="${RESET}${YELLOW}\u@\h${NORMAL} \`${SELECT}\` ${YELLOW}\w $(__git_ps1) >${NORMAL} "
-# export PS1='${RESET}\t \u@\h \W$(__git_ps1 " ($(green_text %s))") $ '
-export PS1="${RESET}${NORMAL}\`${smiles_times}\` ${OCEAN}\D{%m/%d %H:%M:%S}${NORMAL} \u@\h \W${GREEN}\$(__git_ps1 ' (%s)')${NORMAL} $ "
+#export PS1="${RESET}${YELLOW}\u@\h${NORMAL} \`${SELECT}\` ${YELLOW}\w $(__git_ps1) >${NORMAL} "
+#export PS1='${RESET}\t \u@\h \W$(__git_ps1 " ($(green_text %s))") $ '
+#export PS1="${RESET}${NORMAL}\`${smiles_times}\` ${OCEAN}\D{%m/%d %H:%M:%S}${NORMAL} \u@\h \W${GREEN}\$(__git_ps1 ' (%s)')${NORMAL} $ "
+
+# build PS1 by script
+source ps1.src
 export QUERY_TRACE=0
 
 gdo()
