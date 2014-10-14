@@ -95,7 +95,7 @@ smiles_times="if [ \$? = 0 ]; then echo \"${SMILEY}\"; else echo \"${FROWNY}\"; 
 #export PS1="${RESET}${NORMAL}\`${smiles_times}\` ${OCEAN}\D{%m/%d %H:%M:%S}${NORMAL} \u@\h \W${GREEN}\$(__git_ps1 ' (%s)')${NORMAL} $ "
 
 # build PS1 by script
-source ps1.src
+source ~/ps1.src
 export QUERY_TRACE=0
 
 gdo()

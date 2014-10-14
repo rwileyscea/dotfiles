@@ -64,7 +64,7 @@ PROMPT_COLOR='1;34m'
 #export PS1='\[\e[36;40m\]\D{%m/%d %H:%M:%S}\[\e[0;37;40m\] \u@\h \W$(__git_ps1 " ($(green_text %s))") $ '
 
 # build PS1
-source ps1.src
+source ~/ps1.src
 
 
 export LD_LIBRARY_PATH=/usr/evolution28/lib:/usr/lib:/usr/local/lib:$LD_LIBRARY_PATH
